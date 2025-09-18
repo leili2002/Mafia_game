@@ -1,6 +1,7 @@
-package src.main.java.chat.Repository;
+package chat.Repository;
 
-import src.main.java.chat.DatabaseConnection.DatabaseConnection;
+import chat.DatabaseConnection.DatabaseConnection;
+
 
 
 import java.sql.*;
@@ -21,8 +22,11 @@ public class GameRepository {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("ErrorCode: " + e.getErrorCode());
             e.printStackTrace();
         }
+
     }
 
     // Update player's alive status

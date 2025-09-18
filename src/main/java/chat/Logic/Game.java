@@ -1,6 +1,6 @@
-package src.main.java.chat.Logic;
-import src.main.java.chat.DTO.NightResult;
-import src.main.java.chat.Repository.GameRepository;
+package chat.Logic;
+import chat.DTO.NightResult;
+import chat.Repository.GameRepository;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +10,7 @@ public class Game {
     private final Map<String, Integer> voteCount;
     private boolean nightPhase;
     private String mafiaTarget;
+    private boolean gameStarted ;
     private String doctorSave;
 
     // Constructor with Dependency Injection
@@ -19,16 +20,27 @@ public class Game {
         this.nightPhase = false;
         this.mafiaTarget = null;
         this.doctorSave = null;
+        this.gameStarted=false;
     }
 
 
-
+   //-----------------------------------------------------------------------
     // Start night phase
     public void startNight() {
         nightPhase = true;
         mafiaTarget = null;
         doctorSave = null;
         //  System.out.println("Night has started!");
+    }
+    //------------------------------------------------------------------------
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    // Setter method
+    public void setGameStarted(boolean started) {
+        this.gameStarted = started;
     }
     //---------------------------------------------------------------------
 
