@@ -1,4 +1,4 @@
-package src.main.java.chat.DTO;
+package chat.DTO;
 
 public class NightResult {
     String killer;

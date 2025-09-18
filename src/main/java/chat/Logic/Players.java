@@ -1,9 +1,6 @@
-package src.main.java.chat.Logic;
-
-import src.main.java.chat.DTO.NightResult;
-import src.main.java.chat.DTO.SeerCheck;
-import src.main.java.chat.Repository.GameRepository;
-
+package chat.Logic;
+import chat.DTO.SeerCheck;
+import chat.Repository.GameRepository;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

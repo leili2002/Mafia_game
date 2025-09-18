@@ -1,0 +1,8 @@
+chat/DatabaseConnection/DatabaseConnection.class
+chat/Chatroom/ChatServer.class
+chat/Logic/Game.class
+chat/DTO/SeerCheck.class
+chat/Logic/Players.class
+chat/DTO/NightResult.class
+chat/Chatroom/ClientHandler.class
+chat/Repository/GameRepository.class
