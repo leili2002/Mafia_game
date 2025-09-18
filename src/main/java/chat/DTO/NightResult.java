@@ -1,14 +1,14 @@
 package chat.DTO;
 
 public class NightResult {
-    String killer;
-    boolean alive;
-    public  NightResult(String killer,boolean alive){
-        this.killer=killer;
+    public String target;
+    public boolean alive;
+    public  NightResult(String target,boolean alive){
+        this.target=target;
         this.alive=alive;
     }
     public String get_killer(){
-        return killer;
+        return target;
     }
     public boolean getSaver(){
         return alive;

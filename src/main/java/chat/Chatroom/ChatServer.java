@@ -1,4 +1,5 @@
 package chat.Chatroom;
+import chat.GameManegment.GameManager;
 import chat.Logic.Game;
 import chat.Repository.GameRepository;
 import java.io.*;
@@ -9,7 +10,7 @@ public class ChatServer {
     private static final int PORT = 5000; // Port the server listens on
     private static final Set<ClientHandler> clientHandlers = new HashSet<>(); // Active clients
     private static final GameRepository gameRepository = new GameRepository();
-    private static final Game game = new Game(gameRepository);
+    private static final GameManager gameManager = new GameManager(gameRepository);
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
@@ -20,7 +21,7 @@ public class ChatServer {
                 System.out.println("New client connected: " + clientSocket.getInetAddress());
 
 
-                ClientHandler clientHandler = new ClientHandler(clientSocket, game);
+                ClientHandler clientHandler = new ClientHandler(clientSocket, gameManager);
                 addClient(clientHandler);
                 new Thread(clientHandler).start();
             }

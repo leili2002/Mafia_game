@@ -1,29 +1,31 @@
 package chat.Logic;
+import chat.DTO.NightResult;
 import chat.DTO.SeerCheck;
 import chat.Repository.GameRepository;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class Players {
 
     private final GameRepository repository;
-    private Map<String, Integer> voteCount;
     private boolean nightPhase;
     private String mafiaTarget;
     private String doctorSave;
+    private String CheerTarget;
 
     // Constructor with Dependency Injection
     public Players(GameRepository repository) {
         this.repository = repository;
-        this.voteCount = new HashMap<>();
         this.nightPhase = false;
         this.mafiaTarget = null;
         this.doctorSave = null;
     }
 
 
+    public void addplayer(String username,String role){
+        repository.addPlayer(username,role);
+    }
     // Assign roles randomly at game start
     public void assignRoles() {
         List<String> players = repository.getAllPlayerNames();
@@ -47,34 +49,49 @@ public class Players {
 
     //---------------------------------------------------------------------
     // Mafia selects a target
-    public String mafiaSelectTarget(String targetName) {
+    public void mafiaSelectTarget(String targetName) {
         if (nightPhase) {
             mafiaTarget = targetName;
             // System.out.println("Mafia chose: " + targetName);
         }
-        return targetName;
     }
     //---------------------------------------------------------------------
 
     // Doctor selects a player to save
-    public String doctorSavePlayer(String playerName) {
+    public void doctorSavePlayer(String playerName) {
         if (nightPhase) {
             doctorSave = playerName;
             // System.out.println("Doctor chose to save: " + playerName);
         }
-        return playerName;
     }
+
     //---------------------------------------------------------------------
 
     // Seer checks a player and returns role
-    public SeerCheck seerCheck(String playerName) {
+    public void seerCheck(String playerName) {
         if (nightPhase) {
             String role = repository.getRole(playerName);
             SeerCheck data = new SeerCheck(role, playerName);
             //System.out.println("Seer checked " + playerName + " and found: " + role);
-            return data;
+        }
+    }
+
+    public NightResult resolveNightActions() {
+        if (mafiaTarget != null) {
+            if (!mafiaTarget.equals(doctorSave)) {
+                repository.updatePlayerStatus(mafiaTarget, false);
+                // System.out.println(mafiaTarget + " has been killed by Mafia!");
+                return new NightResult(mafiaTarget,false);
+            } else {
+                //System.out.println(mafiaTarget + " was saved by the Doctor!");
+                return new NightResult(mafiaTarget,true);
+            }
         }
         return null;
+    }
+    // Setter for nightPhase
+    public void setNightPhase(boolean nightPhase) {
+        this.nightPhase = nightPhase;
     }
 }
     //----------------------------------------------------------------------

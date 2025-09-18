@@ -1,5 +1,4 @@
 package chat.Logic;
-import chat.DTO.NightResult;
 import chat.Repository.GameRepository;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,65 +7,14 @@ public class Game {
 
     private final GameRepository repository;
     private final Map<String, Integer> voteCount;
-    private boolean nightPhase;
-    private String mafiaTarget;
-    private boolean gameStarted ;
-    private String doctorSave;
 
     // Constructor with Dependency Injection
     public Game(GameRepository repository) {
         this.repository = repository;
         this.voteCount = new HashMap<>();
-        this.nightPhase = false;
-        this.mafiaTarget = null;
-        this.doctorSave = null;
-        this.gameStarted=false;
     }
 
 
-   //-----------------------------------------------------------------------
-    // Start night phase
-    public void startNight() {
-        nightPhase = true;
-        mafiaTarget = null;
-        doctorSave = null;
-        //  System.out.println("Night has started!");
-    }
-    //------------------------------------------------------------------------
-
-    public boolean isGameStarted() {
-        return gameStarted;
-    }
-
-    // Setter method
-    public void setGameStarted(boolean started) {
-        this.gameStarted = started;
-    }
-    //---------------------------------------------------------------------
-
-    // Start day phase
-    public void startDay() {
-        nightPhase = false;
-        resolveNightActions();
-        // System.out.println("Day has started!");
-    }
-
-    //----------------------------------------------------------------------
-
-    // Resolve night actions: Mafia kill vs Doctor save
-    private NightResult resolveNightActions() {
-        if (mafiaTarget != null) {
-            if (!mafiaTarget.equals(doctorSave)) {
-                repository.updatePlayerStatus(mafiaTarget, false);
-                // System.out.println(mafiaTarget + " has been killed by Mafia!");
-                return new NightResult(mafiaTarget,false);
-            } else {
-                //System.out.println(mafiaTarget + " was saved by the Doctor!");
-                return new NightResult(mafiaTarget,true);
-            }
-        }
-        return null;
-    }
 //------------------------------------------------------------------------------
 
     public void castVote(String targetName) {
@@ -126,5 +74,19 @@ public class Game {
         }
 
         return false;
+    }
+
+    public void startDay() {
+        // Optional: resolve previous night actions if needed
+        System.out.println("Day phase started.");
+    }
+
+    public void startNight() {
+        // Optional: prepare for night actions
+        System.out.println("Night phase started.");
+    }
+
+    public void resolveVoting() {
+        resolveVotes();
     }
 }
